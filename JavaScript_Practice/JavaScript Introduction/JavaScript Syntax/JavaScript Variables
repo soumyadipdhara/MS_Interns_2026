@@ -1,0 +1,14 @@
+// var variable
+var studentName = "John Doe";
+let age = 20;
+const college = "ABC University";
+
+console.log("Name:", studentName);
+console.log("Age:", age);
+console.log("College:", college);
+studentName = "Alice";
+age = 21;
+
+console.log("Updated Name:", studentName);
+console.log("Updated Age:", age);
+

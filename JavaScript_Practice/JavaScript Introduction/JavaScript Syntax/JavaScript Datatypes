@@ -1,0 +1,20 @@
+//datatypes
+let name = "Alice";
+let age = 25;
+let bigNumber = 123456789012345678901234567890n;
+let isStudent = true;
+let salary = null;
+let id = Symbol("id");
+let person = {
+    name: "Alice",
+    age: 25
+};
+
+console.log(name);
+console.log(age);
+console.log(bigNumber);
+console.log(isStudent);
+console.log(city);
+console.log(salary);
+console.log(id);
+console.log(person);
