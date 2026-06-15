@@ -1,1 +1,1 @@
-![Project Screenshot](assets/screenshot.png)
+![Project Screenshot](./assets/screenshot.png)
