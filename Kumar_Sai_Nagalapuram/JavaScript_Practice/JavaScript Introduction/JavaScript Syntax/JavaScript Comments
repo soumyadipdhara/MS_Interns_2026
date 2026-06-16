@@ -1,6 +1,3 @@
-// Store the user's name
-let name = "Alice";
 
-/* Display a greeting
-   in the console */
+let name = "Alice";
 console.log("Hello, " + name);
