@@ -1,0 +1,5 @@
+let name = "John";      // Variable declaration
+
+if (name === "John") {  // Conditional statement
+    console.log("Welcome, John!");
+}
