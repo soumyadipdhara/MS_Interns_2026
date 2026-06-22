@@ -34,7 +34,7 @@ const [todos,setTodos]=useState([]);
   };
     return (
   <div className='min-h-screen flex  
-  items-center justify-evenly bg-[#82A3A1] '>
+  items-center justify-evenly gap-8 bg-[#82A3A1] '>
   <div className='bg-white shadow-lg rounded-3xl px-16 py-10 w-100'>
     <h1 className='text-3xl font-bold text-center mb-6'>Add Tasks</h1>
     <div className="mb-4 flex flex-col">
@@ -93,8 +93,16 @@ const [todos,setTodos]=useState([]);
       <button onClick={addTodo} className='bg-slate-800 text-white  
       py-2 rounded-lg w-1/3
       hover:bg-slate-700 cursor-pointer'>Add</button>
-    </div>
-    <ul className='space-y-2'>
+    </div>    
+    </div>  
+      <div className='bg-white shadow-lg rounded-3xl px-16 py-10 w-150'>
+         <h1 className='text-3xl font-bold text-center mb-6'>Task List</h1>
+
+  {todos.length === 0 ? (
+    <p className="text-center text-gray-500">
+      No tasks available
+    </p>
+  ) :(<ul className='space-y-2'>
       {
         todos.map((todo)=>(
           <li
@@ -143,9 +151,8 @@ const [todos,setTodos]=useState([]);
       }
 
       
-    </ul>
-    
-    </div>  
+    </ul>)}
+      </div>
 
   </div>    
 
