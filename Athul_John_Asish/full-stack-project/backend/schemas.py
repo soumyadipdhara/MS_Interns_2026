@@ -14,7 +14,6 @@ class UserLogin(BaseModel):
 
 
 class EmployeeCreate(BaseModel):
-    employee_id: str
     name: str
     email: EmailStr
     department: str
@@ -36,6 +35,7 @@ class TaskCreate(BaseModel):
     priority: str
     due_date: date
     employee_id: int
+    status: str    
 
 
 class TaskResponse(TaskCreate):
