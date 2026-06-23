@@ -36,7 +36,10 @@ function Login() {
   };
     const register = async () => {
     await API.post("/auth/register", registerform);
-
+       setForm({
+    username: registerform.username,
+    password: registerform.password,
+  });
     alert("Registered");
     setLogin(true);    
     navigate("/");
@@ -50,7 +53,7 @@ function Login() {
 </div> */}
  <div className="flex justify-center items-center h-screen w-screen">    
         <div className="bg-white p-5 rounded-lg w-100">
-            <div className="flex justify-between mb-5">
+            <div className="flex justify-around mb-5">
                 <button onClick={()=>setLogin(true)} className={`${base}
                  ${islogin?active:inactive}`}>Login</button>
                 <button onClick={()=>setLogin(false)} className={`${base}
