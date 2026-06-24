@@ -76,6 +76,28 @@ def update_status(
 
     return task
 
+@router.put("/{task_id}")
+def update_task(
+    task_id: int,
+    updated_task: TaskCreate,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    task = db.get(Task, task_id)
+
+    if not task:
+        raise HTTPException(
+            status_code=404,
+            detail="Task not found"
+        )
+
+    for key, value in updated_task.model_dump().items():
+        setattr(task, key, value)
+
+    db.commit()
+    db.refresh(task)
+
+    return task
 
 @router.delete("/{task_id}")
 def delete_task(
