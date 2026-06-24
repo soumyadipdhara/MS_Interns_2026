@@ -1,0 +1,206 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.welcome {
+  margin-bottom: 4px;
+}
+
+.welcomeTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gray-900);
+  letter-spacing: -0.3px;
+}
+
+.welcomeSub {
+  font-size: 14px;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--gray-500);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.statCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-100);
+  transition: box-shadow 0.15s;
+}
+
+.statCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--gray-900);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Progress */
+.progressCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-100);
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.progressPct {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.progressBar {
+  height: 10px;
+  background: var(--gray-100);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 10px;
+  transition: width 0.6s ease;
+}
+
+.progressLegend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--gray-600);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+.personalBanner {
+  background: linear-gradient(135deg, var(--primary) 0%, #6366F1 100%);
+  border-radius: 10px;
+  padding: 16px 20px;
+  color: white;
+  margin-bottom: 4px;
+}
+.personalName { font-size: 16px; font-weight: 700; display: block; }
+.personalDept { font-size: 13px; opacity: 0.8; }
+.personalInfo { display: flex; flex-direction: column; gap: 2px; }
+
+.deptGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.deptCard {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: var(--shadow-sm);
+}
+.deptName { font-size: 12px; font-weight: 500; color: var(--gray-500); }
+.deptCount { font-size: 28px; font-weight: 700; color: var(--gray-900); letter-spacing: -1px; }
+
+.priorityList { background: #fff; border-radius: 10px; border: 1px solid var(--gray-200); padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.priorityRow { display: flex; align-items: center; gap: 12px; }
+.priorityBar { flex: 1; height: 8px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+.priorityFill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.priorityCount { font-size: 13px; font-weight: 600; color: var(--gray-700); width: 24px; text-align: right; }
+
+.noLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 24px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  gap: 12px;
+  color: var(--gray-400);
+}
+.noLink h3 { font-size: 16px; font-weight: 600; color: var(--gray-700); margin: 0; }
+.noLink p { font-size: 14px; color: var(--gray-500); max-width: 400px; line-height: 1.6; margin: 0; }
+.noLink strong { color: var(--primary); }

@@ -1,0 +1,22 @@
+.form { display: flex; flex-direction: column; gap: 16px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.group { display: flex; flex-direction: column; gap: 5px; }
+.label { font-size: 13px; font-weight: 500; color: var(--gray-700); }
+.optional { font-weight: 400; color: var(--gray-400); font-size: 12px; }
+.textarea {
+  width: 100%; padding: 9px 12px; font-size: 14px; font-family: inherit;
+  color: var(--gray-800); background: #fff; border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius); outline: none; resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s; line-height: 1.5; min-height: 80px;
+}
+.textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+.userNote {
+  display: flex; align-items: center; gap: 8px;
+  background: #EEF2FF; color: var(--primary); font-size: 13px;
+  padding: 10px 12px; border-radius: 8px; border: 1px solid #C7D2FE;
+}
+.actions {
+  display: flex; gap: 10px; justify-content: flex-end;
+  padding-top: 8px; border-top: 1px solid var(--gray-200); margin-top: 4px;
+}
+@media (max-width: 500px) { .grid2 { grid-template-columns: 1fr; } }
