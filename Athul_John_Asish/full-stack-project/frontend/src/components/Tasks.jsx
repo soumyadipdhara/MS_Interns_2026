@@ -8,6 +8,11 @@ const navigate = useNavigate();
 const [todos,setTodos]=useState([]);
 const [employees, setEmployees] = useState([]);
 const [editingTask, setEditingTask] = useState(null);
+const [sortBy, setSortBy] = useState("default");
+const [employeeFilter, setEmployeeFilter] = useState("all");
+useEffect(() => {
+  setCurrentPage(1);
+}, [sortBy, employeeFilter]);
 const [form, setForm] = useState({
   title: "",
   description: "",
@@ -29,6 +34,8 @@ const saveTaskEdit = async () => {
     console.error(error);
   }
 };
+const [currentPage, setCurrentPage] = useState(1);
+const tasksPerPage = 2;
 
 const loadTasks = async () => {
   try {
@@ -115,9 +122,76 @@ const addTodo = async () => {
     console.error("Failed to create task:", error);
   }
 };
+const filteredTodos = todos.filter(
+  (todo) =>
+    employeeFilter === "all" ||
+    todo.employee_id ===
+      Number(employeeFilter)
+);
+
+const sortedTodos = [...filteredTodos];
+
+if (sortBy === "due") {
+  sortedTodos.sort((a, b) => {
+    if (a.status === "Completed" && b.status !== "Completed")
+      return 1;
+
+    if (a.status !== "Completed" && b.status === "Completed")
+      return -1;
+
+    return (
+      new Date(a.due_date) -
+      new Date(b.due_date)
+    );
+  });
+}
+else if (sortBy === "priority") {
+  sortedTodos.sort((a, b) => {
+    if (a.status === "Completed" && b.status !== "Completed")
+      return 1;
+
+    if (a.status !== "Completed" && b.status === "Completed")
+      return -1;
+
+    const priorityRank = {
+      high: 2,
+      low: 1,
+    };
+
+    return (
+      priorityRank[b.priority] -
+      priorityRank[a.priority]
+    );
+  });
+}
+else {
+  sortedTodos.sort((a, b) => {
+    if (a.status === "Completed" && b.status !== "Completed")
+      return 1;
+
+    if (a.status !== "Completed" && b.status === "Completed")
+      return -1;
+
+    return 0;
+  });
+}
+const totalPages = Math.ceil(
+  sortedTodos.length / tasksPerPage
+);
+
+const indexOfLastTask =
+  currentPage * tasksPerPage;
+
+const indexOfFirstTask =
+  indexOfLastTask - tasksPerPage;
+
+const currentTasks = sortedTodos.slice(
+  indexOfFirstTask,
+  indexOfLastTask
+);
     return (
   <div className='min-h-screen flex  
-  items-center justify-evenly gap-8 bg-[#82A3A1] '>
+  items-start justify-evenly gap-8 bg-[#82A3A1] pt-5'>
   <div className='bg-white shadow-lg rounded-3xl px-16 py-10 w-100'>
     <h1 className='text-3xl font-bold text-center mb-6'>Add Tasks</h1>
     <div className="mb-4 flex flex-col">
@@ -225,16 +299,61 @@ const addTodo = async () => {
    
     
     </div>  
-      <div className='bg-white shadow-lg rounded-3xl px-16 py-10 w-150'>
+      <div className='bg-white shadow-lg rounded-3xl px-8 py-10 w-150'>
          <h1 className='text-3xl font-bold text-center mb-6'>Task List</h1>
+      <div className="flex justify-start gap-3 mb-4">
 
+  <select
+    value={sortBy}
+    onChange={(e) =>
+      setSortBy(e.target.value)
+    }
+    className="border rounded-lg px-3 py-2"
+  >
+    <option value="default" >
+      Sort By
+    </option>
+
+    <option value="due">
+      Due Date
+    </option>
+
+    <option value="priority">
+      Priority
+    </option>
+  </select>
+
+  <select
+    value={employeeFilter}
+    onChange={(e) =>
+      setEmployeeFilter(
+        e.target.value
+      )
+    }
+    className="border rounded-lg px-3 py-2"
+  >
+    <option value="all">
+      All Employees
+    </option>
+
+    {employees.map((employee) => (
+      <option
+        key={employee.id}
+        value={employee.id}
+      >
+        {employee.name}
+      </option>
+    ))}
+  </select>
+
+</div>
   {todos.length === 0 ? (
     <p className="text-center text-gray-500">
       No tasks available
     </p>
   ) :(<ul className='space-y-2'>
       {
-        todos.map((todo)=>(
+        currentTasks.map((todo)=>(
           <li
           key={todo.id}
           className='flex items-center p-3 rounded-lg bg-slate-100
@@ -302,6 +421,31 @@ const addTodo = async () => {
 
       
     </ul>)}
+    <div className="flex justify-center gap-4 mt-6">
+  <button
+    disabled={currentPage === 1}
+    onClick={() =>
+      setCurrentPage(currentPage - 1)
+    }
+    className="px-4 py-2 bg-slate-800 text-white rounded disabled:opacity-50 cursor-pointer"
+  >
+    Previous
+  </button>
+
+  <span className="flex items-center">
+    Page {currentPage} of {totalPages}
+  </span>
+
+  <button
+    disabled={currentPage === totalPages}
+    onClick={() =>
+      setCurrentPage(currentPage + 1)
+    }
+    className="px-4 py-2 bg-slate-800 text-white rounded disabled:opacity-50 cursor-pointer"
+  >
+    Next
+  </button>
+</div>
       </div>
       {editingTask && (
   <div className="fixed inset-0 bg-black/40 flex items-center justify-center">

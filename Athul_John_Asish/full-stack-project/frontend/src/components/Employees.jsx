@@ -33,7 +33,10 @@ function Employees() {
   const [employees, setEmployees] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortColumn, setSortColumn] = useState("id");
+  const [sortDirection, setSortDirection] = useState("asc");
   const employeesPerPage = 5;
+
 
   const [form, setForm] = useState({
     name: "",
@@ -129,19 +132,47 @@ const indexOfLastEmployee =
 const indexOfFirstEmployee =
   indexOfLastEmployee - employeesPerPage;
 
-const currentEmployees = employees.slice(
-  indexOfFirstEmployee,
-  indexOfLastEmployee
-);
+// const currentEmployees = employees.slice(
+//   indexOfFirstEmployee,
+//   indexOfLastEmployee
+// );
 useEffect(() => {
   setCurrentPage(1);
 }, [search]);
+
+const sortedEmployees = [...employees].sort((a, b) => {
+  const aValue = a[sortColumn];
+  const bValue = b[sortColumn];
+
+  if (typeof aValue === "string") {
+    return sortDirection === "asc"
+      ? aValue.localeCompare(bValue)
+      : bValue.localeCompare(aValue);
+  }
+
+  return sortDirection === "asc"
+    ? aValue - bValue
+    : bValue - aValue;
+});
+const currentEmployees = sortedEmployees.slice(
+  indexOfFirstEmployee,
+  indexOfLastEmployee
+);
+const handleSort = (column) => {
+  if (sortColumn === column) {
+    setSortDirection(
+      sortDirection === "asc" ? "desc" : "asc"
+    );
+  } else {
+    setSortColumn(column);
+    setSortDirection("asc");
+  }
+};
   return (
     <div className="min-h-screen bg-[#82A3A1] p-8">
-      <div className="grid lg:grid-cols-[350px_1fr] gap-8">
-        {/* Add Employee */}
-
-        <div className="bg-white rounded-3xl shadow-lg p-6">
+      <div className="flex items-start justify-evenly gap-8">
+        
+        <div className="bg-white rounded-3xl shadow-lg p-6 ">
           <h2 className="text-2xl font-bold mb-4">
             Add Employee
           </h2>
@@ -198,7 +229,9 @@ useEffect(() => {
               }
               className="w-full border rounded-lg p-2"
             />
-
+            <label className="mb-1 text-sm text-gray-600">
+              Joining Date
+            </label>  
             <input
               type="date"
               value={form.joining_date}
@@ -232,7 +265,7 @@ useEffect(() => {
 
             <button
               onClick={addEmployee}
-              className="bg-slate-800 text-white py-2 rounded-lg w-1/2 cursor-pointer"
+              className="bg-slate-800 text-white py-2 rounded-lg w-[120px] cursor-pointer"
             >
               Add Employee
             </button>
@@ -261,12 +294,84 @@ useEffect(() => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Designation</TableHead>
-                <TableHead>Status</TableHead>
+<TableHead>
+  <button
+    onClick={() => handleSort("id")}
+    className="flex items-center gap-1 cursor-pointer"
+  >
+    ID
+
+    {sortColumn === "id" &&
+      (sortDirection === "asc"
+        ? "▲"
+        : "▼")}
+  </button>
+</TableHead>
+                <TableHead>
+  <button
+    onClick={() => handleSort("name")}
+    className="flex items-center gap-1 cursor-pointer"
+  >
+    Name
+    {sortColumn === "name" ? (
+      sortDirection === "asc" ? "▲" : "▼"
+    ) : (
+      ""
+    )}
+  </button>
+</TableHead>
+<TableHead>
+  <button
+    onClick={() => handleSort("email")}
+    className="flex items-center gap-1 cursor-pointer"
+  >
+    Email
+
+    {sortColumn === "email" &&
+      (sortDirection === "asc"
+        ? "▲"
+        : "▼")}
+  </button>
+</TableHead>
+<TableHead>
+  <button
+    onClick={() => handleSort("department")}
+    className="flex items-center gap-1 cursor-pointer"
+  >
+    Department
+    {sortColumn === "department" ? (
+      sortDirection === "asc" ? "▲" : "▼"
+    ) : (
+      ""
+    )}
+  </button>
+</TableHead>
+<TableHead>
+  <button
+    onClick={() => handleSort("designation")}
+    className="flex items-center gap-1 cursor-pointer"
+  >
+    Designation
+    {sortColumn === "designation" ? (
+      sortDirection === "asc" ? "▲" : "▼"
+    ) : (
+      ""
+    )}
+  </button>
+</TableHead>
+<TableHead>
+  <button
+    onClick={() => handleSort("status")}
+    className="flex items-center gap-1 cursor-pointer"
+  >
+    Status
+    {sortColumn === "status" ? (
+      sortDirection === "asc" ? "▲" : "▼"
+    ) : (
+      ""
+    )}
+  </button>
+</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
