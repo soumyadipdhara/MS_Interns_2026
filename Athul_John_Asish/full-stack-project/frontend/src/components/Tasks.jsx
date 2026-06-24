@@ -7,6 +7,7 @@ function Tasks() {
 const navigate = useNavigate();
 const [todos,setTodos]=useState([]);
 const [employees, setEmployees] = useState([]);
+const [editingTask, setEditingTask] = useState(null);
 const [form, setForm] = useState({
   title: "",
   description: "",
@@ -15,7 +16,19 @@ const [form, setForm] = useState({
   priority: "",
   employee_id: "",
 });
+const saveTaskEdit = async () => {
+  try {
+    await API.put(
+      `/tasks/${editingTask.id}`,
+      editingTask
+    );
 
+    setEditingTask(null);
+    loadTasks();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const loadTasks = async () => {
   try {
@@ -267,12 +280,22 @@ const addTodo = async () => {
       Due: {todo.due_date}
     </p>
   </div>
+  <div className="flex flex-col gap-2">
+
+            <button
+            onClick={() => setEditingTask(todo)}
+            className="p-2 rounded-lg bg-blue-500 text-white
+            hover:bg-blue-600 cursor-pointer ml-2"
+          >
+            Edit
+          </button>
             <button onClick={() => deleteTask(todo.id)}
             className='ml-2 border-none p-2 rounded-lg bg-red-500
             cursor-pointer hover:bg-red-600'
             >
               delete
             </button>
+            </div>
           </li>
         ))
       }
@@ -280,6 +303,131 @@ const addTodo = async () => {
       
     </ul>)}
       </div>
+      {editingTask && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+    <div className="bg-white p-6 rounded-2xl w-[500px]">
+      <h2 className="text-2xl font-bold mb-4">
+        Edit Task
+      </h2>
+
+      <div className="space-y-3">
+
+        <input
+          type="text"
+          value={editingTask.title}
+          onChange={(e) =>
+            setEditingTask({
+              ...editingTask,
+              title: e.target.value,
+            })
+          }
+          className="w-full border rounded-lg p-2"
+        />
+
+        <input
+          type="text"
+          value={editingTask.description}
+          onChange={(e) =>
+            setEditingTask({
+              ...editingTask,
+              description: e.target.value,
+            })
+          }
+          className="w-full border rounded-lg p-2"
+        />
+
+        <select
+          value={editingTask.priority}
+          onChange={(e) =>
+            setEditingTask({
+              ...editingTask,
+              priority: e.target.value,
+            })
+          }
+          className="w-full border rounded-lg p-2"
+        >
+          <option value="low">Low</option>
+          <option value="high">High</option>
+        </select>
+
+        <select
+          value={editingTask.status}
+          onChange={(e) =>
+            setEditingTask({
+              ...editingTask,
+              status: e.target.value,
+            })
+          }
+          className="w-full border rounded-lg p-2"
+        >
+          <option value="Pending">Pending</option>
+          <option value="In Progress">
+            In Progress
+          </option>
+          <option value="Completed">
+            Completed
+          </option>
+        </select>
+
+        <input
+          type="date"
+          value={editingTask.due_date}
+          onChange={(e) =>
+            setEditingTask({
+              ...editingTask,
+              due_date: e.target.value,
+            })
+          }
+          className="w-full border rounded-lg p-2"
+        />
+
+        <select
+          value={editingTask.employee_id}
+          onChange={(e) =>
+            setEditingTask({
+              ...editingTask,
+              employee_id: Number(
+                e.target.value
+              ),
+            })
+          }
+          className="w-full border rounded-lg p-2"
+        >
+          {employees
+            .filter(
+              (emp) => emp.status === "Active"
+            )
+            .map((employee) => (
+              <option
+                key={employee.id}
+                value={employee.id}
+              >
+                {employee.name}
+              </option>
+            ))}
+        </select>
+
+        <div className="flex gap-2">
+          <button
+            onClick={saveTaskEdit}
+            className="bg-slate-800 text-white px-4 py-2 rounded-lg"
+          >
+            Save
+          </button>
+
+          <button
+            onClick={() =>
+              setEditingTask(null)
+            }
+            className="bg-gray-300 px-4 py-2 rounded-lg"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
   </div>    
 
