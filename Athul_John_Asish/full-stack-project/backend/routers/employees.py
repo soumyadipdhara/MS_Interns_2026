@@ -4,8 +4,10 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import Employee
 from schemas import EmployeeCreate
-from dependencies import get_current_user
-
+from dependencies import (
+    get_current_user,
+    require_admin
+)
 router = APIRouter(
     prefix="/employees",
     tags=["Employees"]
@@ -16,7 +18,8 @@ router = APIRouter(
 def create_employee(
     employee: EmployeeCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
+    # current_user=Depends(get_current_user)
+    admin=Depends(require_admin)
 ):
     emp = Employee(**employee.model_dump())
 
@@ -43,7 +46,8 @@ def update_employee(
     employee_id: int,
     employee: EmployeeCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
+    #current_user=Depends(get_current_user)
+    admin=Depends(require_admin)
 ):
     emp = db.get(Employee, employee_id)
 
@@ -66,7 +70,8 @@ def update_employee(
 def delete_employee(
     employee_id: int,
     db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
+    #current_user=Depends(get_current_user)
+    admin=Depends(require_admin)
 ):
     emp = db.get(Employee, employee_id)
 

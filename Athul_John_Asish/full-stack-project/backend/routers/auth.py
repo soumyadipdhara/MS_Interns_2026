@@ -25,7 +25,8 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
     new_user = User(
         username=user.username,
         email=user.email,
-        password=hash_password(user.password)
+        password=hash_password(user.password),
+        role="user"
     )
 
     db.add(new_user)
@@ -94,5 +95,6 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 
     return {
         "access_token": token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "role":db_user.role
     }

@@ -1,5 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+import os
+
+print("Using database:", os.path.abspath("worksphere.db"))
 
 DATABASE_URL = "sqlite:///./worksphere.db"
 

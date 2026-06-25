@@ -4,7 +4,10 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import Task
 from schemas import TaskCreate
-from dependencies import get_current_user
+from dependencies import (
+    get_current_user,
+    require_admin
+)
 
 router = APIRouter(
     prefix="/tasks",
@@ -16,7 +19,8 @@ router = APIRouter(
 def create_task(
     task: TaskCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
+    #current_user=Depends(get_current_user)
+    admin=Depends(require_admin)
 ):
     new_task = Task(**task.model_dump())
 
@@ -81,7 +85,8 @@ def update_task(
     task_id: int,
     updated_task: TaskCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
+    #current_user=Depends(get_current_user)
+    admin=Depends(require_admin)
 ):
     task = db.get(Task, task_id)
 
@@ -103,7 +108,8 @@ def update_task(
 def delete_task(
     task_id: int,
     db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
+    #current_user=Depends(get_current_user)
+    admin=Depends(require_admin)
 ):
     task = db.get(Task, task_id)
 
