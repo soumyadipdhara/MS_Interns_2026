@@ -1,0 +1,7 @@
+let name = "Alice";
+
+function greet(person) {
+    console.log("Hello, " + person + "!");
+}
+
+greet(name);
