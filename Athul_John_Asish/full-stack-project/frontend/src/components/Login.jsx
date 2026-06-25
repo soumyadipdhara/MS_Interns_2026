@@ -28,6 +28,10 @@ function Login() {
         "token",
         res.data.access_token
       );
+      localStorage.setItem(
+  "role",
+  res.data.role
+);
 
       navigate("/employees");
     } catch {

@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/pagination";
 
 function Employees() {
+  const role = localStorage.getItem("role");
   const navigate = useNavigate();
 
   const [employees, setEmployees] = useState([]);
@@ -171,7 +172,7 @@ const handleSort = (column) => {
   return (
     <div className="min-h-screen bg-[#82A3A1] p-8">
       <div className="flex items-start justify-evenly gap-8">
-        
+        {role === "admin" && (
         <div className="bg-white rounded-3xl shadow-lg p-6 ">
           <h2 className="text-2xl font-bold mb-4">
             Add Employee
@@ -270,7 +271,7 @@ const handleSort = (column) => {
               Add Employee
             </button>
           </div>
-        </div>
+        </div>)}
 
         {/* Employee Table */}
 
@@ -403,6 +404,7 @@ const handleSort = (column) => {
                   </TableCell>
 
                   <TableCell className="space-x-2">
+                    {role === "admin" && (
                     <Button
                       variant="outline"
                       onClick={() =>
@@ -412,8 +414,8 @@ const handleSort = (column) => {
                       }
                     >
                       Edit
-                    </Button>
-
+                    </Button>)}
+{role === "admin" && (
                     <Button
                       variant="destructive"
                       onClick={() =>
@@ -423,7 +425,7 @@ const handleSort = (column) => {
                       }
                     >
                       Delete
-                    </Button>
+                    </Button>)}
                   </TableCell>
                 </TableRow>
               ))}

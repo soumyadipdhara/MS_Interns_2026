@@ -4,6 +4,7 @@ import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
 function Tasks() {
+const role = localStorage.getItem("role");  
 const navigate = useNavigate();
 const [todos,setTodos]=useState([]);
 const [employees, setEmployees] = useState([]);
@@ -192,6 +193,7 @@ const currentTasks = sortedTodos.slice(
     return (
   <div className='min-h-screen flex  
   items-start justify-evenly gap-8 bg-[#82A3A1] pt-5'>
+   {role === "admin" && ( 
   <div className='bg-white shadow-lg rounded-3xl px-16 py-10 w-100'>
     <h1 className='text-3xl font-bold text-center mb-6'>Add Tasks</h1>
     <div className="mb-4 flex flex-col">
@@ -298,7 +300,7 @@ const currentTasks = sortedTodos.slice(
     </div>
    
     
-    </div>  
+    </div>  )}
       <div className='bg-white shadow-lg rounded-3xl px-8 py-10 w-150'>
          <h1 className='text-3xl font-bold text-center mb-6'>Task List</h1>
       <div className="flex justify-start gap-3 mb-4">
@@ -399,6 +401,7 @@ const currentTasks = sortedTodos.slice(
       Due: {todo.due_date}
     </p>
   </div>
+  {role === "admin" && (
   <div className="flex flex-col gap-2">
 
             <button
@@ -414,7 +417,7 @@ const currentTasks = sortedTodos.slice(
             >
               delete
             </button>
-            </div>
+            </div>)}
           </li>
         ))
       }
